@@ -5,14 +5,19 @@
    <!-- <select id="getUser1List" parameterType="java.lang.String" resultType="ye.qiwu.community.model.User1">
         SELECT * FROM user WHERE username = #{username} AND password = #{password}
     </select>-->
-
+   <select id="findByUser1" parameterType="java.lang.String" resultType="ye.qiwu.community.model.User1" >
+       select * from user1 where token = #{token,jdbcType=VARCHAR}
+   </select><!--parameterType="java.lang.Integer"-->
+    <select id="findByUser1Id"  resultType="ye.qiwu.community.model.User1">
+        select * from user1 where id = #{id,jdbcType=TINYINT}
+    </select>
     <insert id="insertUser1" parameterType="ye.qiwu.community.model.User1" >
-         insert into user1 (id, account_Id, name ,token , gmt_Create , gmt_Modified
+         insert into user1 (id, account_Id, name ,token , gmt_Create , gmt_Modified,avatarUrl
         )
         values (#{id,jdbcType=TINYINT}, #{account_Id,jdbcType=VARCHAR},
          #{name,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR},
-           #{gmt_Create,jdbcType=BIGINT},
-           #{gmt_Modified,jdbcType=BIGINT}
+           #{gmtCreate,jdbcType=BIGINT},
+           #{gmtModified,jdbcType=BIGINT},#{avatarUrl,jdbcType=VARCHAR}
         )
 
     </insert>

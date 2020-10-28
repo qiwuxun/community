@@ -1,11 +1,15 @@
 package ye.qiwu.community.dto;
 
+import lombok.Data;
+
+@Data
 public class GithubUser {
 
  private Long id;
  private String name;
  private String bio;
-
+private String avatarUrl;//GitHub的图片Url地址
+/*
  public Long getId() {
   return id;
  }
@@ -28,5 +32,5 @@ public class GithubUser {
 
  public void setBio(String bio) {
   this.bio = bio;
- }
+ }*/
 }

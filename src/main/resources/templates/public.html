@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布问题</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="layer-v3.1.1/layer/layer.js"></script>
+</head>
+<body style="background: #efefef">
+
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container-fluid" style="margin:30px ;">
+    <div class="row" style="background-color: #ffffff">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <h2><span class="glyphicon glyphicon-plus " aria-hidden="true"></span> 发起</h2>
+            <hr>
+            <form id="public_form">
+                <div class="form-group">
+                    <label for="title">问题标题（简单扼要）:</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="问题标题....">
+                </div>
+                <div class="form-group">
+                    <label for="describes">问题补充 (必填，请参照右侧提示):</label>
+                    <textarea id="describes" name="describes" class="form-control" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tag">添加标签</label>
+                    <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以‘,’隔开">
+                </div>
+                <div class="form-group" style="float: right;margin-bottom: 20px;">
+                    <a id="public_sub" class="btn btn-success"  onclick="public_Submit()">发布</a>
+                </div>
+              <!--  <button type="submit" class="btn btn-success">提交</button>-->
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>发布问题补充</h3>
+            <b>•问题标题: 请用精简的语言描述您发布的问题，不超过25字</b><br>
+            <b>•问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料:</b><br>
+            •服务器运行环境信息；<br>
+            •软件版本；<br>
+            •问题发生的上下文信息；<br>
+            •可以完整复现问题的代码（如可直接运行于 Kibana Console 的复现流程）；<br>
+            •补充完整的异常和错误信息；<br>
+            •注意阅读格式友好，代码和异常信息请用代码标签格式化张贴；<br>
+            • 选择标签: 选择一个或者多个合适的标签，不超过10个字<br>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+function public_Submit() {
+    var title=$("#title").val();
+    var describes=$("#describes").val();
+    var tag=$("#tag").val();
+    if (!title){
+         // layer.alert("","提示");
+        layer.msg('亲，标题不能为空！！');
+        $("#title").focus();
+        return false;
+    }
+    if (!describes){
+        // layer.alert("","提示");
+        layer.msg('亲，问题补充为必填！！');
+        $("#describes").focus();
+        return false;
+    }
+    if (!tag){
+        // layer.alert("","提示");
+        layer.msg('亲，至少填写一个标签哦！！');
+        $("#tag").focus();
+        return false;
+    }
+    $.ajax({
+        type:"post",
+        url:"/public",
+        data:{'title':title,'describes':describes,'tag':tag} ,
+        success:function(data){
+            console.log("=========");
+            console.log(data);
+            console.log(data.Msg);
+            if(data.status=="1"){
+                //发布成功
+                layer.msg(data.Msg, {icon: 6});
+                //更新页面
+
+               // layer.alert(data.Msg,"提示");
+                window.open("/");
+            }else{
+                //发布失败
+                layer.alert(data.Msg,{icon: 5});
+             //layer.alert('见到你真的很高兴', {icon: 5});
+               // layer.alert("发布失败");
+            }
+           // layer.close(index1);
+        }/*,
+        error:{
+            alert("1111111111111");
+           /!* layer.alert(data.Msg,"提示");*!/
+        }*/
+
+    });
+
+}
+
+</script>
+</body>
+</html>

@@ -2,14 +2,16 @@ server:
   port: 8887
 spring:
   datasource:
-    name: community  #Êı¾İ¿âÃû
+    name: community  #ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½
     url: jdbc:mysql://localhost:3306/community?characterEncoding=utf-8&useSSL=false #url
-    username: root  #ÓÃ»§Ãû
-    password: 123456  #ÃÜÂë
-    driver-class-name: com.mysql.jdbc.Driver #Êı¾İ¿âÁ´½ÓÇı¶¯
+    username: root  #ï¿½Ã»ï¿½ï¿½ï¿½
+    password: 123456  #ï¿½ï¿½ï¿½ï¿½
+    driver-class-name: com.mysql.jdbc.Driver #ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 mybatis:
-  mapper-locations: classpath:mapper/*.xml  #ÅäÖÃÓ³ÉäÎÄ¼ş
-  type-aliases-package: ye.qiwu.community.model  #ÅäÖÃÊµÌåÀà
+  mapper-locations: classpath:mapper/*.xml  #ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½Ä¼ï¿½
+  type-aliases-package: ye.qiwu.community.model  #ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
+  configuration:
+    map-underscore-to-camel-case: true #é©¼å³°é—®é¢˜
 github:
   client:
     id: f0e7bffee1b0113953b3

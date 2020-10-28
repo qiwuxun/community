@@ -8,4 +8,10 @@ import ye.qiwu.community.model.User1;
 @Mapper
 public interface User1Mapper {
  boolean insertUser1(User1 user1);
+
+ User1 findByUser1(String token);
+
+// User1 getSelUser1ById(Integer creator);
+
+ User1 findByUser1Id(Integer id);
 }

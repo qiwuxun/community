@@ -17,7 +17,7 @@ public class UserController {
  public String show(){
   return "login";
  }
-
+/**/
  @RequestMapping(value = "/loginIn",method = RequestMethod.POST)
  public String login(String name,String password){
   System.out.println("name: "+name);

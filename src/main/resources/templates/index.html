@@ -3,61 +3,116 @@
 <head>
     <title>码匠社区</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+    <script type="text/javascript"  src="js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="myCss/my.css">
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
 
     <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="layui-v2.5.6/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="layui-v2.5.6/layui/layui.js"></script>
 </head>
-<body>
+<body style="background: #efefef">
 
-<nav class="navbar nav bar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">码匠社区</span>
-                <!--  <span class="icon-bar"></span>-->
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container-fluid" style="margin:30px ;">
+    <div class="row" style="background-color: #ffffff">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-list " aria-hidden="true"></span> 发现</h2>
+            <hr>
+            <div class="media" th:each="questionDto : ${questionDtos}">
+                <div class="media-left">
+                    <a href="#"><!-- src="https://avatars3.githubusercontent.com/u/71621026?v=4"-->
+                        <img th:src="${questionDto.user1.avatarUrl}" class="media-object media-img img-thumbnail">
+                    </a>
 
-            </button>
-            <a class="navbar-brand" href="#">码匠社区</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索问题">
                 </div>
-                <button type="submit" class="btn btn-info">搜索</button>
-            </form>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${questionDto.title}"></h4>
+                       <span th:text="${questionDto.describes}"></span><br>
+                    <span class="text-desc">
+                        <span th:text="${questionDto.commentCount}" ></span>个回复 •<span th:text="${questionDto.viewCount}">1</span> 次浏览 • <span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                    </span>
+                </div>
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination"><!--th:if="${pageInfo.showFirstPage}"-->
+                    <li th:if="${pageInfo.showFirstPage}">
+                        <a  th:href="@{/(page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">首页<!--&laquo;--></span>
+                        </a>
+                       <!-- <span th:text="${pageInfo.showFirstPage}"></span>-->
+                    </li>
+                    <li th:if="${pageInfo.showPrevious}">
+                        <a  th:href="@{/(page=${pageInfo.page -1})}" aria-label="Previous">
+                            <span aria-hidden="true">上一页<!--&laquo;--></span>
+                        </a>
+                    </li>
 
+                    <li th:each="page:${pageInfo.pages}" th:class="${pageInfo.page == page}? 'active' : ''">
+                        <a th:href="@{/(page=${page})} "  th:text="${page}"></a>
+                    </li>
 
-            <ul class="nav navbar-nav navbar-right">
-                <!--第三方github授权登录-->
+                    <li th:if="${pageInfo.showNext}">
+                        <a th:href="@{/(page=${pageInfo.page +1})}" aria-label="Next">
+                            <span aria-hidden="true">下一页<!--&raquo;--></span>
+                        </a>
+                    </li>
+                    <li th:if="${pageInfo.showEndPage}">
+                        <a th:href="@{/(page=${pageInfo.total})}" aria-label="Next">
+                            <span aria-hidden="true">末页<!--&raquo;--></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+           <!-- <div id="demo7"></div>-->
 
-                <li class="dropdown" th:if="${session.user1 !=null}">
-                    <a href="#" class="dropdown-toggle"
-                       data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false" th:text="${session.user1.getName()}">
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">消息中心</a></li>
-                        <li><a href="#">个人资料</a></li>
-                        <li><a href="#">退出登录</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
-                <li th:if="${session.user1==null}">
-                    <a href="https://github.com/login/oauth/authorize?client_id=f0e7bffee1b0113953b3&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
-                </li>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>热门话题</h3>
 
-            </ul>
         </div>
     </div>
-</nav>
+</div>
 </body>
+<script type="text/javascript">
+
+   /* $.ready(function () {
+        doIndex();
+    });
+    function doIndex(){
+        $.ajax({
+            url:"/query",
+            type:"post",
+            success:function (data) {
+                window.location;
+
+            }
+        });
+    }*/
+   /* layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage;
+        /!*,layer = layui.layer;*!/
+
+        //完整功能
+        laypage.render({
+            elem: 'demo7'
+            ,count: 100
+            ,layout: [ 'prev', 'page', 'next','skip', 'limit', 'refresh', 'count']
+            ,jump: function(obj){
+                console.log(obj)
+            }
+        });
+
+
+    });*/
+</script>
+
+
+
 </html>
