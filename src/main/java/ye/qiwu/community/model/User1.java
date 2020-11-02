@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class User1 {
  private Integer id;
- private  String account_Id;
+ private  String accountId;//
  private String  name;
  private  String token;
  private Long gmtCreate;
@@ -20,12 +20,12 @@ private String avatarUrl;//GitHub中图片url
   this.id = id;
  }
 
- public String getAccount_Id() {
-  return account_Id;
+ public String getaccountId() {
+  return accountId;
  }
 
- public void setAccount_Id(String account_Id) {
-  this.account_Id = account_Id;
+ public void setaccountId(String accountId) {
+  this.accountId = accountId;
  }
 
  public String getName() {

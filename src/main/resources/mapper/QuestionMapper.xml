@@ -10,6 +10,16 @@
     from question
 
 </select>
+    <select id="selQuesByUser1Id" parameterType="java.lang.Integer" resultType="ye.qiwu.community.model.Question">
+        select * from question
+        where creator = #{creator,jdbcType=BIGINT}
+
+    </select>
+
+    <select id="selQuesByQuesId" resultType="ye.qiwu.community.model.Question">
+         select * from question
+         where id = #{id,jdbcType=BIGINT}
+    </select>
     <!--<select id="findByUser1" parameterType="java.lang.String" resultType="ye.qiwu.community.model.User1" >
        select * from user1 where token = #{token,jdbcType=VARCHAR}
    </select>-->
@@ -24,4 +34,16 @@
         )
 
     </insert>
+
+    <update id="updateQuestion" parameterType="ye.qiwu.community.model.Question">
+        update question
+        set title = #{title,jdbcType=VARCHAR},describes = #{describes,jdbcType=VARCHAR},
+        gmt_Modified = #{gmtModified,jdbcType=BIGINT},tag = #{tag,jdbcType=VARCHAR}
+       where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateQuesView" parameterType="ye.qiwu.community.model.Question">
+        update question
+        set view_count = view_count + #{viewCount,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

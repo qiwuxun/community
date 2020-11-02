@@ -29,4 +29,24 @@ public class QuestionServiceImp implements QuestionService {
  public int selQuesCount() {
   return questionMapper.selQuesCount();
  }
+
+ @Override
+ public List<Question> selQuesByUser1Id(Integer creator) {
+  return questionMapper.selQuesByUser1Id(creator);
+ }
+
+ @Override
+ public Question selQuesByQuesId(Long id) {
+  return questionMapper.selQuesByQuesId(id);
+ }
+
+ @Override
+ public int updateQuestion(Question question) {
+  return questionMapper.updateQuestion(question);
+ }
+
+ @Override
+ public void updateQuesView(Question question) {
+  questionMapper.updateQuesView(question);
+ }
 }

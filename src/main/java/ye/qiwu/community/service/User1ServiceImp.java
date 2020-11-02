@@ -55,4 +55,15 @@ public class User1ServiceImp implements User1Service {
  public int selCountNum() {
   return 0;
  }
+
+ @Override
+ public void updateUser1(User1 user1) {
+  //首先查询传过来的user1的token是否存在数据库
+  user1Mapper.updateUser1(user1);
+ }
+
+ @Override
+ public User1 selUser1ByAccountId(String accountId) {
+  return user1Mapper.selUser1ByAccountId(accountId);
+ }
 }

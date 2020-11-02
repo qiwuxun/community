@@ -2,7 +2,7 @@ package ye.qiwu.community.model;
 
 import lombok.Data;
 
-@Data
+/*@Data*/
 public class Question {
  private Long id;
  private  String title;//标题
@@ -49,11 +49,11 @@ public class Question {
   this.title = title;
  }
 
- public String getdescribes() {
+ public String getDescribes() {
   return describes;
  }
 
- public void setdescribes(String describes) {
+ public void setDescribes(String describes) {
   this.describes = describes;
  }
 
@@ -105,29 +105,9 @@ public class Question {
   this.creator = creator;
  }
 
- public Integer getcommentCount() {
-  return commentCount;
- }
 
- public void setcommentCount(Integer commentCount) {
-  this.commentCount = commentCount;
- }
 
- public Integer getviewCount() {
-  return viewCount;
- }
 
- public void setviewCount(Integer viewCount) {
-  this.viewCount = viewCount;
- }
-
- public Integer getlikeCount() {
-  return likeCount;
- }
-
- public void setlikeCount(Integer likeCount) {
-  this.likeCount = likeCount;
- }
 
  public String getTag() {
   return tag;

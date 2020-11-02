@@ -13,4 +13,10 @@ User1 findByUser1Id(Integer id);
  List<QuestionDto> getQuestionList(Integer start, Integer pageSize);
 
  int selCountNum();
+
+ void updateUser1(User1 user1);
+
+ User1 selUser1ByAccountId(String accountId);
+
+// QuestionDto findByQuestionId(Long id);
 }

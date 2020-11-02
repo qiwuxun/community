@@ -8,17 +8,31 @@
    <select id="findByUser1" parameterType="java.lang.String" resultType="ye.qiwu.community.model.User1" >
        select * from user1 where token = #{token,jdbcType=VARCHAR}
    </select><!--parameterType="java.lang.Integer"-->
+
     <select id="findByUser1Id"  resultType="ye.qiwu.community.model.User1">
         select * from user1 where id = #{id,jdbcType=TINYINT}
     </select>
+
+    <select id="selUser1ByAccountId" parameterType="java.lang.String" resultType="ye.qiwu.community.model.User1">
+        select  * from user1 where account_Id = #{accountId,jdbcType=VARCHAR}
+
+    </select>
+
     <insert id="insertUser1" parameterType="ye.qiwu.community.model.User1" >
          insert into user1 (id, account_Id, name ,token , gmt_Create , gmt_Modified,avatarUrl
         )
-        values (#{id,jdbcType=TINYINT}, #{account_Id,jdbcType=VARCHAR},
+        values (#{id,jdbcType=TINYINT}, #{accountId,jdbcType=VARCHAR},
          #{name,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR},
            #{gmtCreate,jdbcType=BIGINT},
            #{gmtModified,jdbcType=BIGINT},#{avatarUrl,jdbcType=VARCHAR}
         )
 
     </insert>
+
+    <update id="updateUser1" parameterType="ye.qiwu.community.model.User1">
+        update user1
+        set name = #{name,jdbcType=VARCHAR},token = #{token,jdbcType=VARCHAR},
+        avatarUrl = #{avatarUrl,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=TINYINT}
+    </update>
 </mapper>

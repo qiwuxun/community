@@ -14,4 +14,8 @@ public interface User1Mapper {
 // User1 getSelUser1ById(Integer creator);
 
  User1 findByUser1Id(Integer id);
+
+ User1 selUser1ByAccountId(String accountId);
+
+ void updateUser1(User1 user1);
 }

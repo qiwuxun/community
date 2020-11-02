@@ -16,59 +16,61 @@ public class PageInfo {
 private Integer total;//总记录数
 
  public void setPagination(Integer total, Integer page) {
-  if (total % pageSize == 0) {
-   this.totalPage = total / pageSize;
-  } else {
-   this.totalPage = total / pageSize + 1;
-  }
+  if(total!=0) {
+      if (total % pageSize == 0) {
+       this.totalPage = total / pageSize;
+      } else {
+       this.totalPage = total / pageSize + 1;
+      }
 
-  if (page < 1) {
-   page = 1;
-  }
-  if (page > totalPage) {
-   page = totalPage;
-  }
-  //  this.totalPage = totalPage;//19
-  this.page = page;
+      if (page < 1) {
+       page = 1;
+      }
+      if (page > totalPage) {
+       page = totalPage;
+      }
+      //  this.totalPage = totalPage;//19
+      this.page = page;
 
-  pages.add(page);
-  //计算当前页码条里显示的页面数字
-  for (int i = 1; i <= 3; i++) {
-   if (page - i > 0) {
-    pages.add(0, page - i);
-   }
+      pages.add(page);
+      //计算当前页码条里显示的页面数字
+      for (int i = 1; i <= 3; i++) {
+       if (page - i > 0) {
+        pages.add(0, page - i);
+       }
 
-   if (page + i <= totalPage) {
-    pages.add(page + i);
-   }
-  }
+       if (page + i <= totalPage) {
+        pages.add(page + i);
+       }
+      }
 
-  // 是否展示上一页
-  if (page == 1) {
-   showPrevious = false;
-  } else {
-   showPrevious = true;
-  }
+      // 是否展示上一页
+      if (page == 1) {
+       showPrevious = false;
+      } else {
+       showPrevious = true;
+      }
 
-  // 是否展示下一页
-  if (page == totalPage) {
-   showNext = false;
-  } else {
-   showNext = true;
-  }
+      // 是否展示下一页
+      if (page == totalPage) {
+       showNext = false;
+      } else {
+       showNext = true;
+      }
 
-  // 是否展示第一页
-  if (pages.contains(1)) {
-   showFirstPage = false;
-  } else {
-   showFirstPage = true;
-  }
+      // 是否展示第一页
+      if (pages.contains(1)) {
+       showFirstPage = false;
+      } else {
+       showFirstPage = true;
+      }
 
-  // 是否展示最后一页
-  if (pages.contains(totalPage)) {
-   showEndPage = false;
-  } else {
-   showEndPage = true;
+      // 是否展示最后一页
+      if (pages.contains(totalPage)) {
+       showEndPage = false;
+      } else {
+       showEndPage = true;
+      }
   }
  }
 

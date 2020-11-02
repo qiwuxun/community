@@ -3,16 +3,17 @@
 <head>
     <title>发布问题</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
 
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="layer-v3.1.1/layer/layer.js"></script>
+    <script type="text/javascript" src="/layer-v3.1.1/layer/layer.js"></script>
+    <script type="text/javascript" th:src="@{/myJS/my.js}"></script>
 </head>
 <body style="background: #efefef">
 
@@ -23,17 +24,18 @@
         <h2><span class="glyphicon glyphicon-plus " aria-hidden="true"></span> 发起</h2>
             <hr>
             <form id="public_form">
+                <input type="hidden" id="public_id" name="id">
                 <div class="form-group">
-                    <label for="title">问题标题（简单扼要）:</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="问题标题....">
+                    <label for="public_title">问题标题（简单扼要）:</label>
+                    <input  type="text" class="form-control" name="title" id="public_title" placeholder="问题标题....">
                 </div>
                 <div class="form-group">
-                    <label for="describes">问题补充 (必填，请参照右侧提示):</label>
-                    <textarea id="describes" name="describes" class="form-control" rows="10"></textarea>
+                    <label for="public_describes">问题补充 (必填，请参照右侧提示):</label>
+                    <textarea id="public_describes" name="describes" class="form-control" rows="10"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="tag">添加标签</label>
-                    <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以‘,’隔开">
+                    <label for="public_tag">添加标签</label>
+                    <input type="text" class="form-control" id="public_tag" name="tag" placeholder="输入标签，以‘,’隔开">
                 </div>
                 <div class="form-group" style="float: right;margin-bottom: 20px;">
                     <a id="public_sub" class="btn btn-success"  onclick="public_Submit()">发布</a>
@@ -56,32 +58,59 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(function () {
+        public_init();
+    });
+function public_init() {
+    var url=window.location.search.substring(1);
+    //需要改一下，该url包不包含id
+    var split = url.split("=");
+    if (split[0]=='id') {
+        var id=split[1];
+        selPublic(id);
+    }
+    /*if (url=='') {
+
+    }else{
+        var split = url.split("=");
+        var id=split[1];
+        selPublic(id);
+    }*/
+    console.log(url);
+}
 function public_Submit() {
-    var title=$("#title").val();
-    var describes=$("#describes").val();
-    var tag=$("#tag").val();
+    var id=$("#public_id").val();
+    var title=$("#public_title").val();
+    var describes=$("#public_describes").val();
+    var tag=$("#public_tag").val();
     if (!title){
          // layer.alert("","提示");
         layer.msg('亲，标题不能为空！！');
-        $("#title").focus();
+        $("#public_title").focus();
         return false;
     }
     if (!describes){
         // layer.alert("","提示");
         layer.msg('亲，问题补充为必填！！');
-        $("#describes").focus();
+        $("#public_describes").focus();
         return false;
     }
     if (!tag){
         // layer.alert("","提示");
         layer.msg('亲，至少填写一个标签哦！！');
-        $("#tag").focus();
+        $("#public_tag").focus();
         return false;
+    }
+    var o;
+    if (!id) {
+    o={'title':title,'describes':describes,'tag':tag};
+    }else{
+        o={'title':title,'describes':describes,'tag':tag,'id':id};
     }
     $.ajax({
         type:"post",
         url:"/public",
-        data:{'title':title,'describes':describes,'tag':tag} ,
+        data:o,
         success:function(data){
             console.log("=========");
             console.log(data);
@@ -109,7 +138,8 @@ function public_Submit() {
     });
 
 }
-
+/*var question = [[${question}]];
+console.log(question);*/
 </script>
 </body>
 </html>

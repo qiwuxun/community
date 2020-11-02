@@ -52,23 +52,50 @@ public class AuthController {
         System.out.println(user1.getId());
         user1.setName(githubUser.getName());
         user1.setToken(token);
-        user1.setAccount_Id(String.valueOf(githubUser.getId()));
-        user1.setGmtCreate(System.currentTimeMillis());
-        user1.setGmtModified(user1.getGmtCreate());
+       // user1.setaccountId(String.valueOf(githubUser.getId()));
+        String accountId=String.valueOf(githubUser.getId());
         user1.setAvatarUrl(githubUser.getAvatarUrl());
-        boolean b = user1Service.insertUse1(user1);
-        System.out.println(b);
+        //应该是更新user1
+       //先查询user1是否存在数据库，存在更新，不存在执行插入
+       //根据accountId查询这个user1是否存在
+        User1 user2=  user1Service.selUser1ByAccountId(accountId);
+        if (user2!=null){
+         //更新
+         user1.setId(user2.getId());
+           user1Service.updateUser1(user1);
+        }else{
+           user1.setAccountId(String.valueOf(githubUser.getId()));
+           user1.setGmtCreate(System.currentTimeMillis());
+           user1.setGmtModified(user1.getGmtCreate());
+         //插入
+           user1Service.insertUse1(user1);
+        }
+
+        //  user1Service.updateUser1(user1);
+        // System.out.println(b);
         Cookie cookie = new Cookie("token", token);
         cookie.setMaxAge(60*60*24);
         response.addCookie(cookie);
 
-        request.getSession().setAttribute("user1", user1);
-      //   return response.sendRedirect();
+       //  request.getSession().setAttribute("user1", user1);
+       //   return response.sendRedirect();
         return "redirect:/";
      } else {
         return "redirect:/";
      }
 
 
+  }
+  //退出登录
+  @GetMapping("/logout")
+  public String logout(HttpServletRequest request,HttpServletResponse response){
+  // Object user1 = request.getSession().getAttribute("user1");
+   //删除user1的session对象
+   request.getSession().removeAttribute("user1");
+   //删除cookie
+   Cookie cookie = new Cookie("token", null);
+   cookie.setMaxAge(0);
+   response.addCookie(cookie);
+   return "redirect:/";
   }
  }
