@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ye.qiwu.community.dao.NotificationMapper">
+
+    <insert id="insertNotification" parameterType="ye.qiwu.community.model.Notification" >
+         insert into notification (notifier,notifierName, receiver ,outerid ,outerTitle,
+          type ,gmt_create,status
+        )
+            values (#{notifier,jdbcType=BIGINT},#{notifierName,jdbcType=VARCHAR},
+        #{receiver,jdbcType=BIGINT},
+        #{outerid,jdbcType=BIGINT},#{outerTitle,jdbcType=VARCHAR},#{type,jdbcType=TINYINT},
+           #{gmtCreate,jdbcType=BIGINT} ,#{status,jdbcType=TINYINT}
+        )
+
+    </insert>
+    <select id="selNotifiByUser1IdList" parameterType="ye.qiwu.community.model.Notification" resultType="ye.qiwu.community.model.Notification">
+        select * from notification where receiver = #{receiver,jdbcType=BIGINT}
+         ORDER BY gmt_create DESC;
+</select><!--看一下这里是写receiver还是outerid-->
+
+    <!---->
+    <select id="selUnReadCount" parameterType="ye.qiwu.community.model.Notification" resultType="java.lang.Long">
+        select count(1) from  notification
+        where receiver = #{receiver,jdbcType=BIGINT} and status =0
+    </select>
+
+    <select id="selNotificationById" parameterType="java.lang.Long" resultType="ye.qiwu.community.model.Notification">
+        select * from notification where id = #{id,jdbcType=BIGINT}
+    </select>
+    <update id="upNotiStatusById" parameterType="ye.qiwu.community.model.Notification">
+        update notification
+        set status = #{status,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ye.qiwu.community.dao.CommentMapper">
+<select id="selCommentByCommentId" parameterType="java.lang.Long" resultType="ye.qiwu.community.model.Comment">
+    select * from comment where id = #{id,jdbcType=BIGINT}
+</select>
+
+<select id="selCommentByParentQuesId" parameterType="ye.qiwu.community.model.Comment" resultType="ye.qiwu.community.model.Comment">
+    select *
+    from comment
+    where parent_id = #{parentId,jdbcType=BIGINT} and type = #{type,jdbcType=TINYINT}
+    ORDER BY gmt_Modified DESC;
+</select>
+<!--and type = #{type,jdbcType=TINYINT}-->
+    <insert id="insertComment" parameterType="ye.qiwu.community.model.Comment" >
+         insert into comment (parent_id, type ,commentator ,
+          gmt_Create ,gmt_Modified,content
+        )
+        values (#{parentId,jdbcType=BIGINT},
+         #{type,jdbcType=TINYINT}, #{commentator,jdbcType=TINYINT},
+           #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}
+           , #{content,jdbcType=VARCHAR}
+        )
+
+    </insert>
+<update id="upCommentCount" parameterType="ye.qiwu.community.model.Comment">
+       update comment
+        set comment_Count = comment_Count + #{commentCount,jdbcType=BIGINT}
+        where  parent_id = #{parentId,jdbcType=BIGINT} and type = #{type,jdbcType=TINYINT}
+
+</update>
+</mapper>

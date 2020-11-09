@@ -23,6 +23,9 @@ public interface QuestionMapper {
  Question selQuesByQuesId(Long id);
 
  int updateQuestion(Question question);
-
+ //修改阅读数
  void updateQuesView(Question question);
+ //修改评论数
+ void updateQuesComment(Question question);
+  List<Question> selectRelated(Question question);
 }

@@ -7,6 +7,62 @@
     font-weight: normal;
     color: #999;
 }
+.community-fluid{
+    margin-top: 20px;
+}
+.profile-a{
+    color: #499ef3;
+}
+.profile-a:hover{
+    color: #155faa;
+}
+.public-tab-tag{
+    display: none;
+    margin-top:10px;
+}
+.question-margin{
+    margin-top: 20px;
+}
+.public-tag-span .label-info{
+    cursor: pointer;
+    white-space: normal;
+    background-color: #99cfff;
+}
+.public-tag-span .label-info span{
+    display: inline-block;
+    margin-top: 12px;
+}
+.public-tag-span .label-info:hover{
+    background-color: #339dff;
+}
+.question-left{
+    margin-top: 30px;
+    padding: 0;
+}
+.question-tagWrp{
+    margin-bottom: 10px;
+}
+.question-spanTag{
+    margin-right: 5px;
+}
+.question-related{
+    margin-top: 8px;
+}
+.question-related li{
+    /*line-height: 20px;*/
+    padding: 5px 0;
+}
+.question-related li a{
+    color: #155faa;
+}
+.question-related li a:hover{
+    text-decoration:none;
+    color: #499ef3;
+}
+.question-img{
+    width: 80%;
+    margin: 20px 0;
+}
 .community-ques-span{
     font-weight: normal;
     font-size: 12px;
@@ -14,4 +70,61 @@
 }
 .community-tag{
     color: #99cfff;
+}
+.comment_wrapper{
+    margin-bottom: 15px;
+}
+.comment-coll{
+    margin-top: 15px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+.comment-two-comment{
+    margin:10px 0px;
+    border-bottom: 1px solid #f5f5f5;
+}
+.btn-comment{
+    float: right;
+    margin: 15px 0px;
+}
+.comment-date{
+float:right;
+}
+.comment-menu{
+    color: #999;
+    margin-top: 5px;
+}
+.comment-commentCount{
+    font-size: 10px;
+    color: #cecece;
+}
+.comment-menu .zan-icon{
+    padding-right:10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.comment-menu .comment-icon{
+    font-size: 15px;
+    cursor: pointer;
+}
+.comment-menu .zan-icon:hover{
+    color: #499ef3;
+}
+.comment-menu .comment-icon:hover{
+    color: #499ef3;
+}
+.comment-menu .active{
+    color: #499ef3;
+}
+#question-div hr{
+    height: 0.5px;
+}
+.comment-two-btn{
+    margin:10px 0px;
+}
+.comment-two-input{
+    margin: 10px 0px;
+   /* background-color: #fafafa;*/
 }

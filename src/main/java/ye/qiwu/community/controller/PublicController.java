@@ -5,18 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import ye.qiwu.community.cache.TagCache;
 import ye.qiwu.community.model.Question;
 import ye.qiwu.community.model.User1;
 import ye.qiwu.community.service.QuestionService;
 import ye.qiwu.community.service.User1Service;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-//import org.springframework.web.bind.annotation.GetMapping;
+
 
 @Controller
 public class PublicController {
@@ -27,8 +24,8 @@ public class PublicController {
  private User1Service user1Service;
  //发布
  @GetMapping("/public")
- public  String  Public(){
-
+ public  String  Public(Model model){
+  model.addAttribute("tags", TagCache.getTags());
   return "public";
  }
 @PostMapping("/public")
@@ -48,7 +45,15 @@ public class PublicController {
        return map;
      //  return "public";
       }
-      //获得提问人的用户id
+      String invalid = question.getTag();
+
+     if (StringUtils.isEmpty(invalid)){
+      //model.addAttribute("status","0");
+      model.addAttribute("error","输入非法标签");
+      map.put("status","tag");
+      map.put("Msg","输入非法标签");
+     }
+        //获得提问人的用户id
       question.setCreator(user1.getId());
       //可以修改一下时间格式
 
@@ -93,6 +98,7 @@ public class PublicController {
  Question question = questionService.selQuesByQuesId(quesId);
  model.addAttribute("question",question);
  System.out.println("public-question:"+question);
+ model.addAttribute("tags", TagCache.getTags());
  return "public";
  //return "redirect:/public";
 }

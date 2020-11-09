@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="/myCss/my.css">
     <script type="text/javascript" src="/layer-v3.1.1/layer/layer.js"></script>
     <script type="text/javascript" th:src="@{/myJS/my.js}"></script>
 </head>
@@ -27,7 +27,7 @@
                 <input type="hidden" id="public_id" name="id">
                 <div class="form-group">
                     <label for="public_title">问题标题（简单扼要）:</label>
-                    <input  type="text" class="form-control" name="title" id="public_title" placeholder="问题标题....">
+                    <input  type="text" class="form-control" name="title" id="public_title" autocomplete="off" placeholder="问题标题....">
                 </div>
                 <div class="form-group">
                     <label for="public_describes">问题补充 (必填，请参照右侧提示):</label>
@@ -35,12 +35,36 @@
                 </div>
                 <div class="form-group">
                     <label for="public_tag">添加标签</label>
-                    <input type="text" class="form-control" id="public_tag" name="tag" placeholder="输入标签，以‘,’隔开">
+                    <input type="text" class="form-control" id="public_tag" name="tag"
+                           placeholder="输入标签，以‘,’隔开" onclick="showSelectTag()">
+                    <!--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 question-tagWrp">-->
+                    <div id="select-tag" class="public-tab-tag">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each=" category,categoryStat : ${tags}" th:class="${categoryStat.first ? 'active':''}" >
+                                <a th:href="${'#'+category.categoryName}" aria-controls="home" role="tab"
+                                   data-toggle="tab" th:text="${category.categoryName}"></a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane public-tag-span" th:id="${category.categoryName}"
+                                 th:each=" category,categoryStat : ${tags}"
+                                 th:class="${categoryStat.first ? 'active tab-pane public-tag-span':'tab-pane public-tag-span'}">
+                                    <span class="label label-info question-spanTag"
+                                          th:each="selTag : ${category.tags}">
+                                       <span onclick="selectTag(this)" th:data-tag="${selTag}" th:text="${selTag}">spring</span>
+                                    </span>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="form-group" style="float: right;margin-bottom: 20px;">
-                    <a id="public_sub" class="btn btn-success"  onclick="public_Submit()">发布</a>
+                    <a id="public_sub" class="btn btn-success" onclick="public_Submit()">发布</a>
                 </div>
-              <!--  <button type="submit" class="btn btn-success">提交</button>-->
+                <!--  <button type="submit" class="btn btn-success">提交</button>-->
             </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -61,85 +85,94 @@
     $(function () {
         public_init();
     });
-function public_init() {
-    var url=window.location.search.substring(1);
-    //需要改一下，该url包不包含id
-    var split = url.split("=");
-    if (split[0]=='id') {
-        var id=split[1];
-        selPublic(id);
-    }
-    /*if (url=='') {
 
-    }else{
+    function public_init() {
+        var url = window.location.search.substring(1);
+        //需要改一下，该url包不包含id
         var split = url.split("=");
-        var id=split[1];
-        selPublic(id);
-    }*/
-    console.log(url);
-}
-function public_Submit() {
-    var id=$("#public_id").val();
-    var title=$("#public_title").val();
-    var describes=$("#public_describes").val();
-    var tag=$("#public_tag").val();
-    if (!title){
-         // layer.alert("","提示");
-        layer.msg('亲，标题不能为空！！');
-        $("#public_title").focus();
-        return false;
-    }
-    if (!describes){
-        // layer.alert("","提示");
-        layer.msg('亲，问题补充为必填！！');
-        $("#public_describes").focus();
-        return false;
-    }
-    if (!tag){
-        // layer.alert("","提示");
-        layer.msg('亲，至少填写一个标签哦！！');
-        $("#public_tag").focus();
-        return false;
-    }
-    var o;
-    if (!id) {
-    o={'title':title,'describes':describes,'tag':tag};
-    }else{
-        o={'title':title,'describes':describes,'tag':tag,'id':id};
-    }
-    $.ajax({
-        type:"post",
-        url:"/public",
-        data:o,
-        success:function(data){
-            console.log("=========");
-            console.log(data);
-            console.log(data.Msg);
-            if(data.status=="1"){
-                //发布成功
-                layer.msg(data.Msg, {icon: 6});
-                //更新页面
+        if (split[0] == 'id') {
+            var id = split[1];
+            selPublic(id);
+        }
+        /*if (url=='') {
 
-               // layer.alert(data.Msg,"提示");
-                window.open("/");
-            }else{
-                //发布失败
-                layer.alert(data.Msg,{icon: 5});
-             //layer.alert('见到你真的很高兴', {icon: 5});
-               // layer.alert("发布失败");
-            }
-           // layer.close(index1);
-        }/*,
+        }else{
+            var split = url.split("=");
+            var id=split[1];
+            selPublic(id);
+        }*/
+        console.log(url);
+    }
+
+    function public_Submit() {
+        var id = $("#public_id").val();
+        var title = $("#public_title").val();
+        var describes = $("#public_describes").val();
+        var tag = $("#public_tag").val();
+        if (!title) {
+            // layer.alert("","提示");
+            layer.msg('亲，标题不能为空！！');
+            $("#public_title").focus();
+            return false;
+        }
+
+        if (!describes) {
+            // layer.alert("","提示");
+            layer.msg('亲，问题补充为必填！！');
+            $("#public_describes").focus();
+            return false;
+        }
+        if (!tag) {
+            // layer.alert("","提示");
+            layer.msg('亲，至少填写一个标签哦！！');
+            $("#public_tag").focus();
+            return false;
+        }
+       // var tags = [[${tags}]];
+        console.log("===tags=====");
+       // console.log(tags);
+        var o;
+        if (!id) {
+            o = {'title': title, 'describes': describes, 'tag': tag};
+        } else {
+            o = {'title': title, 'describes': describes, 'tag': tag, 'id': id};
+        }
+        $.ajax({
+            type: "post",
+            url: "/public",
+            data: o,
+            success: function (data) {
+                console.log("=========");
+                console.log(data);
+                console.log(data.Msg);
+                if (data.status == "1") {
+                    //发布成功
+                    layer.msg(data.Msg, {icon: 6});
+                    //更新页面
+
+                    // layer.alert(data.Msg,"提示");
+                    window.location.href="/";
+                   // window.open("/");
+                } else if (data.status=="tag") {
+                    layer.alert(data.Msg, {icon: 5});
+                }else {
+                    //发布失败
+                    layer.alert(data.Msg, {icon: 5});
+
+                }
+                // layer.close(index1);
+            }/*,
         error:{
             alert("1111111111111");
            /!* layer.alert(data.Msg,"提示");*!/
         }*/
 
-    });
+        });
 
-}
-/*var question = [[${question}]];
-console.log(question);*/
+    }
+
+    /*var question = [[${question}]];
+    console.log(question);*/
 </script>
 </body>
 </html>

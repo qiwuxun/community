@@ -18,4 +18,6 @@ public interface QuestionService {
  int updateQuestion(Question question);
 
  void updateQuesView(Question question);
+
+ List<Question> selectRelated(Question question);
 }

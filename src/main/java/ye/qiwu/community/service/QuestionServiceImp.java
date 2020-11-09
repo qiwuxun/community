@@ -2,10 +2,15 @@ package ye.qiwu.community.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ye.qiwu.community.dao.QuestionMapper;
 import ye.qiwu.community.model.Question;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -48,5 +53,18 @@ public class QuestionServiceImp implements QuestionService {
  @Override
  public void updateQuesView(Question question) {
   questionMapper.updateQuesView(question);
+ }
+
+ @Override
+ public List<Question> selectRelated(Question question) {
+  if (StringUtils.isEmpty(question.getTag())){
+   //tag为空
+   return new ArrayList<>();
+  }
+  String[] tags = StringUtils.split(question.getTag(), ",");
+  //希望分割成tag1|tag1
+  String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+    question.setTag(regexpTag);
+  return questionMapper.selectRelated(question);
  }
 }
