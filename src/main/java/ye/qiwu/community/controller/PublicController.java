@@ -1,5 +1,6 @@
 package ye.qiwu.community.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 
 @Controller
+@Slf4j
 public class PublicController {
 
  @Autowired
@@ -84,6 +86,7 @@ public class PublicController {
        map.put("status","1");
        map.put("Msg","发布成功！！");
     }else {
+     log.error("插入失败,{}",num);
        System.out.println("插入失败！！");
        map.put("status","0");
        map.put("Msg","发布失败！！");

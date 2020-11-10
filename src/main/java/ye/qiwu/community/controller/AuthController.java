@@ -1,5 +1,6 @@
 package ye.qiwu.community.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 public class AuthController {
 
  @Autowired
@@ -46,7 +48,7 @@ public class AuthController {
      accessTokenTo.setRedirect_uri(redirect_Uri);
      String accessToken = githubProvider.getAccessToken(accessTokenTo);
      GithubUser githubUser = githubProvider.getGithubUser(accessToken);
-     if (githubUser != null) {
+     if (githubUser != null&&githubUser.getId()!=null) {
         String token = UUID.randomUUID().toString();
         User1 user1 = new User1();
         //System.out.println(user1.getId());
@@ -81,6 +83,8 @@ public class AuthController {
        //   return response.sendRedirect();
         return "redirect:/";
      } else {
+      log.error("callback get github error,{}",githubUser);
+      //登录失败
         return "redirect:/";
      }
 
