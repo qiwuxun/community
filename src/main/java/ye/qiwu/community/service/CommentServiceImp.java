@@ -84,6 +84,10 @@ public class CommentServiceImp implements CommentService {
  }
 /*添加通知信息*/
  private void createNotifiy(Comment comment,Long receiver,String notifierName,String outerTitle,Long outerId) {
+  if (comment.getCommentator().longValue()==receiver){
+   return;
+  }
+
   Notification notification = new Notification();
   //实现添加一条回复通知信息
   notification.setGmtCreate(System.currentTimeMillis());

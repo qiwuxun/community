@@ -3,13 +3,22 @@
 <mapper namespace="ye.qiwu.community.dao.QuestionMapper">
 <select id="getSelQuesList" resultType="ye.qiwu.community.model.Question">
     select * from question
+    <where>
+        <if test="title != null and title != ''">
+            and title regexp #{title}
+        </if>
+    </where>
     ORDER BY gmt_Modified DESC
     limit #{start},#{pageSize}
 </select>
 <select id="selQuesCount" resultType="java.lang.Integer">
     select count(1)
     from question
-
+    <where>
+        <if test="title != null and title != ''">
+            and title regexp #{title}
+        </if>
+    </where>
 </select>
     <select id="selQuesByUser1Id" parameterType="java.lang.Integer" resultType="ye.qiwu.community.model.Question">
         select * from question

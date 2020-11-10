@@ -21,7 +21,7 @@ public class IndexController {
  @GetMapping("/")
  public String index( Model model,
    @RequestParam(name = "page",defaultValue = "1") Integer page,
-    @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize){
+    @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize,@RequestParam(name = "serch",required = false)String serch){
   System.out.println("page:"+page);
   System.out.println("pageSize"+pageSize);
     //分页问题
@@ -33,7 +33,7 @@ public class IndexController {
     //除了question对象集合外，还要图片地址
 
   // 获得提问总记录数
-    int num= questionService.selQuesCount();
+    int num= questionService.selQuesCount(serch);
   System.out.println("num:"+num);
   PageInfo pageInfo = new PageInfo();
   pageInfo.setPage(page);
@@ -51,13 +51,14 @@ public class IndexController {
   if (start<0){
    start=0;
   }
-  List<QuestionDto> list= user1Service.getQuestionList(start,pageSize);
+  List<QuestionDto> list= user1Service.getQuestionList(start,pageSize,serch);
     // int num= user1Service.selCountNum();
-    System.out.println("pageInfo: "+pageInfo);
+    //System.out.println("pageInfo: "+pageInfo);
     model.addAttribute("questionDtos",list);
     model.addAttribute("pageInfo",pageInfo);
-  System.out.println("list:");
-  System.out.println(list);
+    model.addAttribute("serch",serch);
+  //System.out.println("list:");
+ // System.out.println(list);
     //model.addAttribute("name",name);
     return  "index";
  }

@@ -9,7 +9,6 @@ import ye.qiwu.community.model.Question;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 
@@ -26,13 +25,20 @@ public class QuestionServiceImp implements QuestionService {
  }
 
  @Override
- public List<Question> getSelQuesList(Integer start, Integer pageSize) {
-  return questionMapper.getSelQuesList(start,pageSize);
+ public List<Question> getSelQuesList(Integer start, Integer pageSize, String regexpSerch) {
+  return questionMapper.getSelQuesList(start,pageSize,regexpSerch);
  }
 
  @Override
- public int selQuesCount() {
-  return questionMapper.selQuesCount();
+ public int selQuesCount(String serch) {
+  String regexpSerch = null;
+  if (!StringUtils.isEmpty(serch)){
+   String[] serchs=serch.split(" ");
+   regexpSerch = Arrays.stream(serchs).collect(Collectors.joining("|"));
+   //question.setTag(regexpTag);
+
+  }
+  return questionMapper.selQuesCount(regexpSerch);
  }
 
  @Override
@@ -61,8 +67,17 @@ public class QuestionServiceImp implements QuestionService {
    //tag为空
    return new ArrayList<>();
   }
-  String[] tags = StringUtils.split(question.getTag(), ",");
+  String[] tags=question.getTag().split(",");
+  System.out.println(tags);
+ // String[] tags = StringUtils.split(question.getTag(), ",");
   //希望分割成tag1|tag1
+
+  /*String regexpTags = Arrays
+   .stream(tags)
+   .filter(StringUtils::isEmpty)
+   .map(t -> t.replace("+", "").replace("*", "").replace("?", ""))
+   .filter(StringUtils::isEmpty)
+   .collect(Collectors.joining("|"));*/
   String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
     question.setTag(regexpTag);
   return questionMapper.selectRelated(question);

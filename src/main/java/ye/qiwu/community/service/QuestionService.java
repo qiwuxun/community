@@ -7,9 +7,9 @@ import java.util.List;
 public interface QuestionService {
  int insertQuestion(Question question);
 
- List<Question> getSelQuesList(Integer start, Integer pageSize);
+ List<Question> getSelQuesList(Integer start, Integer pageSize, String regexpSerch);
 
- int selQuesCount();
+ int selQuesCount(String serch);
 
  List<Question> selQuesByUser1Id(Integer creator);
 

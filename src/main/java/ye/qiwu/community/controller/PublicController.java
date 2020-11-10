@@ -33,8 +33,8 @@ public class PublicController {
  public Map<String,Object> doPublic(Question question, HttpServletRequest request, Model model){
       Map<String, Object> map = new HashMap<>();
       //获得user对象
-      System.out.println("打印一下question");
-      System.out.println(question);
+      //System.out.println("打印一下question");
+      //System.out.println(question);
       User1 user1;
       user1 = (User1) request.getSession().getAttribute("user1");
       if (user1==null){
@@ -59,10 +59,9 @@ public class PublicController {
 
     //判断是更新还是添加新问题
     int num;
-   // num=100;
-   // System.out.println(num);
-    System.out.println("public-发布");
-    System.out.println(question.getId());
+
+   // System.out.println("public-发布");
+   // System.out.println(question.getId());
     //System.out.println(StringUtils.isEmpty(question.getId()));
     Long questionId = question.getId();
     if (questionId==null){
@@ -97,7 +96,7 @@ public class PublicController {
  System.out.println("public-id: "+id);
  Question question = questionService.selQuesByQuesId(quesId);
  model.addAttribute("question",question);
- System.out.println("public-question:"+question);
+ //System.out.println("public-question:"+question);
  model.addAttribute("tags", TagCache.getTags());
  return "public";
  //return "redirect:/public";
@@ -118,7 +117,7 @@ public class PublicController {
   System.out.println("public-id: "+id);
   Question question = questionService.selQuesByQuesId(quesId);
   //model.addAttribute("question",question);
-  System.out.println("public-question:"+question);
+  //System.out.println("public-question:"+question);
   map.put("question",question);
 
   return map;

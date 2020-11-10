@@ -39,7 +39,7 @@ public class ProfileController {
    model.addAttribute("section","questions");
    model.addAttribute("sectionName","我的提问");
    List<Question> list= questionService.selQuesByUser1Id(user1.getId());
-   System.out.println("selQuesByUser1Id: "+list);
+  // System.out.println("selQuesByUser1Id: "+list);
    model.addAttribute("questions",list);
    model.addAttribute("user1",user1);
 
@@ -53,7 +53,7 @@ public class ProfileController {
 
 
   }
-  System.out.println("user1.getId()： "+user1.getId());
+  //System.out.println("user1.getId()： "+user1.getId());
 
   return "profile";
  }

@@ -49,7 +49,7 @@ public class AuthController {
      if (githubUser != null) {
         String token = UUID.randomUUID().toString();
         User1 user1 = new User1();
-        System.out.println(user1.getId());
+        //System.out.println(user1.getId());
         user1.setName(githubUser.getName());
         user1.setToken(token);
        // user1.setaccountId(String.valueOf(githubUser.getId()));

@@ -10,7 +10,7 @@ public interface User1Service {
 
  User1 findByUser1(String token);
 User1 findByUser1Id(Integer id);
- List<QuestionDto> getQuestionList(Integer start, Integer pageSize);
+ List<QuestionDto> getQuestionList(Integer start, Integer pageSize, String serch);
 
  int selCountNum();
 

@@ -5,7 +5,12 @@
     <title th:text="${questionDto.title}"></title>
     <script type="text/javascript"  src="/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript"  src="/js/moment.js"></script>
+    <script type="text/javascript"  src="/markdown/editormd.min.js"></script>
+    <script type="text/javascript"  src="/markdown/lib/marked.min.js"></script>
+    <script type="text/javascript"  src="/markdown/lib/prettify.min.js"></script>
+
     <link rel="stylesheet" href="/myCss/my.css">
+    <link rel="stylesheet" href="/markdown/editormd.preview.min.css">
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
@@ -37,11 +42,17 @@
                 </span><br>
                 <hr>
                 <!--正文-->
-                <div>
-                    <span th:text="${questionDto.describes}"></span>
-                    <!--<hr style="border: 0;border-top: 1px solid #eee;margin-top:5px;margin-bottom: 10px;">-->
+                <div id="question-view">
+                        <!-- Server-side output Markdown text -->
+                        <textarea style="display:none;" th:text="${questionDto.describes}"></textarea>
                 </div>
-               <br>
+                <script type="text/javascript">
+                    $(function() {
+                    editormd.markdownToHTML("question-view", {
+                    });
+                    });
+                </script>
+                <br>
                <!-- <span class="text-desc community-tag" th:text="${questionDto.tag}" ></span>-->
                 <hr>
                 <!--标签-->
@@ -132,12 +143,12 @@
                 <div class="media" style="margin:10px 0px; ">
                     <div class="media-left">
                         <a href="#"><!-- src="https://avatars3.githubusercontent.com/u/71621026?v=4"-->
-                            <img th:src="${questionDto.user1.avatarUrl}" class="media-object media-img img-thumbnail">
+                            <img th:src="${session.user1!=null ? session.user1.avatarUrl:'/images/img/default-url.png'}" class="media-object media-img img-thumbnail">
                         </a>
                     </div>
                     <div class="media-body" style="padding-top: 12px;">
                         <h4 class="media-heading" >
-                            <span class="text-desc" th:text="${questionDto.user1.name}"></span>
+                            <span class="text-desc" th:text="${session.user1!=null ?session.user1.name:'匿名用户'}"></span>
                         </h4>
                     </div>
                 </div>
@@ -165,7 +176,7 @@
            <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin: 20px 0">
                  <h4>扫码加起武微信</h4>
-                 <img class="img-thumbnail question-img" src="/img/qiwu.jpg" alt="起武：寻。">
+                 <img class="img-thumbnail question-img" src="/images/img/qiwu.jpg" alt="起武：寻。">
              </div>
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 12px;">
@@ -179,6 +190,7 @@
         </div>
     </div>
 </div>
+<div th:insert="~{footer :: foot}"></div>
 
 <script>
 

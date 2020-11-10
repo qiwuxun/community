@@ -34,7 +34,7 @@ public class CommentController {
   logger.error("error","");
   Map<String, Object> map = new HashMap<>();
   System.out.println("==================");
-  System.out.println(comment);
+  //System.out.println(comment);
   if (comment==null|| StringUtils.isEmpty(comment.getContent())){
    return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
   }
@@ -49,7 +49,7 @@ public class CommentController {
   comment.setCommentator(user1.getId());
  int num= commentService.insertComment(comment,user1);
 
-  System.out.println(num);
+  //System.out.println(num);
 // map.put("message","成功");
   return ResultDTO.okOff();
  }

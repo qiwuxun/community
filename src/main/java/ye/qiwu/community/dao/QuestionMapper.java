@@ -14,9 +14,9 @@ public interface QuestionMapper {
 
  int insertQuestion(Question question);
 
- List<Question> getSelQuesList(@Param(value = "start") Integer start,@Param(value = "pageSize") Integer pageSize);
+ List<Question> getSelQuesList(@Param(value = "start") Integer start, @Param(value = "pageSize") Integer pageSize,@Param(value = "title")  String title);
 
- int selQuesCount();
+ int selQuesCount(String title);
 
  List<Question> selQuesByUser1Id(@Param(value = "creator") Integer creator);
 

@@ -68,28 +68,28 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination"><!--th:if="${pageInfo.showFirstPage}"-->
                     <li th:if="${pageInfo.showFirstPage}">
-                        <a  th:href="@{/(page=1)}" aria-label="Previous">
+                        <a  th:href="@{/(page=1,serch=serch)}" aria-label="Previous">
                             <span aria-hidden="true">首页<!--&laquo;--></span>
                         </a>
                        <!-- <span th:text="${pageInfo.showFirstPage}"></span>-->
                     </li>
                     <li th:if="${pageInfo.showPrevious}">
-                        <a  th:href="@{/(page=${pageInfo.page -1})}" aria-label="Previous">
+                        <a  th:href="@{/(page=${pageInfo.page -1},serch=${serch})}" aria-label="Previous">
                             <span aria-hidden="true">上一页<!--&laquo;--></span>
                         </a>
                     </li>
 
                     <li th:each="page:${pageInfo.pages}" th:class="${pageInfo.page == page}? 'active' : ''">
-                        <a th:href="@{/(page=${page})} "  th:text="${page}"></a>
+                        <a th:href="@{/(page=${page},serch=${serch})} "  th:text="${page}"></a>
                     </li>
 
                     <li th:if="${pageInfo.showNext}">
-                        <a th:href="@{/(page=${pageInfo.page +1})}" aria-label="Next">
+                        <a th:href="@{/(page=${pageInfo.page +1},serch=${serch})}" aria-label="Next">
                             <span aria-hidden="true">下一页<!--&raquo;--></span>
                         </a>
                     </li>
                     <li th:if="${pageInfo.showEndPage}">
-                        <a th:href="@{/(page=${pageInfo.total})}" aria-label="Next">
+                        <a th:href="@{/(page=${pageInfo.total},serch=${serch})}" aria-label="Next">
                             <span aria-hidden="true">末页<!--&raquo;--></span>
                         </a>
                     </li>
@@ -104,6 +104,7 @@
         </div>
     </div>
 </div>
+<div th:insert="~{footer :: foot}"></div>
 </body>
 <script type="text/javascript">
 

@@ -18,12 +18,13 @@ public class TagCache {
   List<TagsDTO> tagsDTO = new ArrayList<>();
   TagsDTO program = new TagsDTO();
   program.setCategoryName("开发语言");
-  program.setTags(Arrays.asList(programs));
+  program.setTags(Arrays.asList("javascript", "php", "css", "html", "html5", "java", "node.js", "python", "c++", "c", "golang", "objective-c", "typescript", "shell", "swift", "c#", "sass", "ruby", "bash", "less", "asp.net",
+   "lua", "scala", "coffeescript", "actionscript", "rust", "erlang", "perl"));
   tagsDTO.add(program);
 
   TagsDTO framework = new TagsDTO();
   framework.setCategoryName("平台框架");
-  framework.setTags(Arrays.asList(frameworks));
+  framework.setTags(Arrays.asList("laravel", "spring", "express", "django", "flask", "yii", "ruby-on-rails", "tornado", "koa", "struts"));
   tagsDTO.add(framework);
 
   TagsDTO server = new TagsDTO();

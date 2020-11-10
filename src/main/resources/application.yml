@@ -20,3 +20,11 @@ github:
     secret: 0d179b8d823b3dc520892314e53e932c3c079099
   redirect:
     uri: http://localhost:8887/callback
+logging:
+  file:
+    path: logs/
+    max-history: 15
+    max-size: 100MB
+  level:
+    root: info
+    ye.qiwu.community.dao: debug
