@@ -20,7 +20,7 @@ github:
     secret: 0d179b8d823b3dc520892314e53e932c3c079099
   redirect:
     uri: http://localhost:8887/callback
-logging:
+logging:  #日志相关设置
   file:
     path: logs/
     max-history: 15

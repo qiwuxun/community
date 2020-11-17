@@ -11,6 +11,7 @@ import ye.qiwu.community.exception.CustomizeErrorCode;
 import ye.qiwu.community.exception.CustomizeException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.UUID;
 
 @Controller
@@ -25,6 +26,7 @@ public class FileController {
    System.out.println(file.getOriginalFilename());
    System.out.println(file.getContentType());
    //实现保存，并返回虚拟相对路径
+ //file.
    saveImageFile(file,request);
     //返回虚拟相对路径
    String url = "http://localhost:8887/images/upImg/" + file.getOriginalFilename();
@@ -38,17 +40,24 @@ public class FileController {
  private void saveImageFile(MultipartFile file, HttpServletRequest request) {
   String generatedFileName;
   String fileName=file.getOriginalFilename();
+
+  System.out.println("fileName"+fileName);
   String[] filePaths = fileName.split("\\.");
+
   if (filePaths.length > 1) {
    generatedFileName = UUID.randomUUID().toString() + "." + filePaths[filePaths.length - 1];
   } else {
    throw new CustomizeException(CustomizeErrorCode.FILE_UPLOAD_FAIL);
   }
+  System.out.println(generatedFileName);
+  File file1 = new File(generatedFileName);
+  String path = file1.getAbsolutePath();
+  System.out.println("=========  "+path);
+//file.transferTo();
+  String uploadPath = request.getServletContext().getRealPath("./") + File.separator;
+  System.out.println(uploadPath);
 
-  String realPath = request.getContextPath();
-  //request.getServletContext().getRealPath("/images/upImg");
 
-  System.out.println(realPath);
 /*映射请求到图片路径下
 
 相对路径：registry.addResourceHandler("/static/**").addResourceLocations("classpath:/templates/static/");
